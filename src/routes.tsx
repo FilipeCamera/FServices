@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from './screens/Home';
 import Cadastrar from './screens/Cadastrar';
+import Servicos from './screens/Servicos';
 
 const Stack = createStackNavigator();
 
@@ -25,7 +26,21 @@ export default function Routes() {
             headerTitle: 'FServices',
             headerTitleAlign: 'center',
             headerTitleStyle: { fontFamily: 'Cairo_700Bold', color: '#416CD9' },
-            headerStyle: {elevation: 0},
+            headerStyle: { elevation: 0 },
+            headerLeft: false,
+          }}
+        />
+        <Stack.Screen
+          name="Servicos"
+          component={Servicos}
+          options={{
+            title: 'FServices',
+            headerStyle: {
+              backgroundColor: '#416CD9',
+              //elevation: 0,
+            },
+            headerTitleAlign: 'center',
+            headerTitleStyle: { fontFamily: 'Cairo_700Bold', color: '#FFF' },
             headerLeft: false,
           }}
         />

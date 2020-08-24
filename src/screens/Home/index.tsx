@@ -24,7 +24,7 @@ export default function Home() {
         <ButtonRegister onPress={() => navigation.navigate('Cadastrar')}>
           <RegisterText>Cadastrar Serviço</RegisterText>
         </ButtonRegister>
-        <Button>
+        <Button onPress={() => navigation.navigate('Servicos')}>
           <ButtonText>Procurar Serviços</ButtonText>
         </Button>
       </Background>

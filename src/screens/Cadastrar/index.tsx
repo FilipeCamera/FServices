@@ -13,6 +13,8 @@ import {
   BoxCity,
   CityInput,
   Uf,
+  Button,
+  ButtonText
 } from './styles';
 
 import Tags from 'react-native-tags';
@@ -64,8 +66,8 @@ export default function Cadastrar() {
       />
       <Label>Valor do serviço:</Label>
       <BoxValor>
-        <ValorInput placeholder="De" />
-        <ValorInput placeholder="Até" />
+        <ValorInput placeholder="De" keyboardType='numeric'/>
+        <ValorInput placeholder="Até" keyboardType='numeric'/>
       </BoxValor>
       <BoxCity>
         <CityInput placeholder="Cidade" />
@@ -82,6 +84,9 @@ export default function Cadastrar() {
           <Uf.Item label="BH" value="BH" />
         </Uf>
       </BoxCity>
+      <Button>
+          <ButtonText>Finalizar</ButtonText>
+      </Button>
     </Container>
   );
 }

@@ -90,3 +90,19 @@ export const Uf = styled.Picker`
   background: #f2f2f2;
   color: #808080;
 `;
+
+export const Button = styled.TouchableOpacity`
+  background: #416CD9;
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  margin: 40px 0 0;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ButtonText = styled.Text`
+  font-family: 'Cairo_600SemiBold';
+  font-size: 16px;
+  color: #FFF;
+`;
