@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import { Container, SearchBar, TagsView, TextTags, ButtonTag } from './styles';
 
@@ -7,6 +7,8 @@ import { AntDesign } from '@expo/vector-icons';
 import Tags from 'react-native-tags';
 
 export default function Servicos() {
+  const [filter, setFilter] = useState([]);
+
   return (
     <Container
       contentContainerStyle={{
@@ -21,8 +23,8 @@ export default function Servicos() {
         textInputProps={{
           placeholder: 'Filtrar por',
         }}
-        initialTags={['Maior Nota', 'Salvador']}
-        onChangeTags={(tags: any) => console.log(tags)}
+        initialTags={filter}
+        onChangeTags={(tags: any) => setFilter(tags)}
         onTagPress={(index: any, tagLabel: any, event: any, deleted: any) =>
           console.log(
             index,
