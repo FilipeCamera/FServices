@@ -19,6 +19,8 @@ import {
 
 import Tags from 'react-native-tags';
 
+import {addCadastro} from '../../database/api';
+
 export default function Cadastrar() {
   const [categoria, setCategoria] = useState('Serviços Domésticos');
   const [uf, setUf] = useState('SP');
@@ -154,7 +156,21 @@ export default function Cadastrar() {
           <Uf.Item label="DF" value="DF" />
         </Uf>
       </BoxCity>
-      <Button onPress={() => {}}>
+      <Button
+        onPress={() => {
+          addCadastro(
+            categoria,
+            nome,
+            nomeServico,
+            whatsapp,
+            tagsData,
+            valorInicial,
+            valorFinal,
+            cidade,
+            uf
+          );
+        }}
+      >
         <ButtonText>Finalizar</ButtonText>
       </Button>
     </Container>

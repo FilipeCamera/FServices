@@ -1,13 +1,50 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Container, SearchBar, TagsView, TextTags, ButtonTag } from './styles';
+import { AdMobBanner } from 'expo-ads-admob';
 
-import { AntDesign } from '@expo/vector-icons';
+import {
+  Container,
+  SearchBar,
+  TagsView,
+  TextTags,
+  ButtonTag,
+  BoxCard,
+  CardTitle,
+  CardBoxName,
+  CardName,
+  CardNameDesc,
+  CardBoxPreco,
+  PrecoTitle,
+  PrecoDesc,
+  CardBoxLocation,
+  LocationTitle,
+  LocationDesc,
+  CardBoxTags,
+  BoxTags,
+  TagsTitle,
+  ButtonWhats,
+  TextWhats,
+} from './styles';
+
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
+
+import * as Firebase from 'firebase';
 
 import Tags from 'react-native-tags';
 
+import { getServicos } from '../../database/api';
+
 export default function Servicos() {
   const [filter, setFilter] = useState([]);
+  const [data, setData] = useState<Firebase.firestore.DocumentData[]>([]);
+
+  useEffect(() => {
+    async function loadServico() {
+      await getServicos(setData);
+    }
+    loadServico();
+    console.log(data);
+  }, []);
 
   return (
     <Container
@@ -39,12 +76,55 @@ export default function Servicos() {
           <TagsView key={`${tag}-${index}`}>
             <TextTags>{tag}</TextTags>
             <ButtonTag onPress={onPress}>
-              <AntDesign name='closecircleo' size={16} color='#FFF'/>
+              <AntDesign name="closecircleo" size={16} color="#FFF" />
             </ButtonTag>
           </TagsView>
         )}
       />
       <SearchBar placeholder="Pesquisar..." />
+      <AdMobBanner
+        bannerSize="fullBanner"
+        adUnitID="ca-app-pub-3940256099942544/6300978111"
+        servePersonalizedAds
+        onDidFailToReceiveAdWithError={(e) => console.log(e)}
+        style={{ position: 'absolute', bottom: 0 }}
+      />
+      {data.map((item, index) => {
+        return (
+          <BoxCard key={index}>
+            <CardTitle>{item.nomeServico}</CardTitle>
+            <CardBoxName>
+              <CardName>Nome:</CardName>
+              <CardNameDesc>{item.nome}</CardNameDesc>
+            </CardBoxName>
+            <CardBoxPreco>
+              <PrecoTitle>Valor do servico:</PrecoTitle>
+              <PrecoDesc>
+                R${item.valorInicial} - R${item.valorFinal}
+              </PrecoDesc>
+            </CardBoxPreco>
+            <CardBoxLocation>
+              <LocationTitle>Localização:</LocationTitle>
+              <LocationDesc>
+                {item.cidade}, {item.uf}
+              </LocationDesc>
+            </CardBoxLocation>
+            <CardBoxTags>
+              {item.tagsData.map((item, index) => {
+                return (
+                  <BoxTags key={index}>
+                    <TagsTitle>{item}</TagsTitle>
+                  </BoxTags>
+                );
+              })}
+            </CardBoxTags>
+            <ButtonWhats>
+              <FontAwesome name="whatsapp" size={25} color="#FFF" />
+              <TextWhats>Chamar no Whatsapp</TextWhats>
+            </ButtonWhats>
+          </BoxCard>
+        );
+      })}
     </Container>
   );
 }
