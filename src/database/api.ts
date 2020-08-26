@@ -1,10 +1,10 @@
-import React from 'react';
-
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 
 import * as Firebase from 'firebase';
 
 import 'firebase/firestore';
+
+import PublishBanner from '../components/PublishBanner';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCpGGAJy6Bj3J3WMj6XaQaKDwopQAe4Wks',
@@ -42,25 +42,28 @@ export async function addCadastro(
       valorFinal,
       cidade,
       uf,
-      createdAt: Firebase.firestore.FieldValue.serverTimestamp()
+      createdAt: Firebase.firestore.FieldValue.serverTimestamp(),
     });
-    if(!docRef){
-      return Alert.alert('Tivemos um problema no servidor e o cadastro não foi feito')
+    if (!docRef) {
+      return Alert.alert(
+        'Tivemos um problema no servidor e o cadastro não foi feito'
+      );
     }
-    return Alert.alert('Cadastro feito com sucesso!')
+    return PublishBanner();
   } catch (error) {
-    return Alert.alert('Ocorreu um error')
+    return Alert.alert('Ocorreu um error');
   }
 }
 
-export async function getServicos(setData: any){
-  let serviceList: Firebase.firestore.DocumentData[] = []
+export async function getServicos(setData: any, setDataFilter: any) {
+  let serviceList: Firebase.firestore.DocumentData[] = [];
 
-  let snapshot = await db.collection('servicos').orderBy('createdAt').get()
+  let snapshot = await db.collection('servicos').orderBy('createdAt').get();
 
   snapshot.forEach((doc) => {
-    serviceList.push(doc.data())
-  })
-  
-  setData(serviceList)
+    serviceList.push(doc.data());
+  });
+
+  setData(serviceList);
+  setDataFilter(serviceList);
 }

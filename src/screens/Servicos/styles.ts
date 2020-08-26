@@ -1,6 +1,10 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.ScrollView``;
+export const Container = styled.View`
+  flex: 1;
+`;
+
+export const Scroll = styled.ScrollView``;
 
 export const SearchBar = styled.TextInput`
   height: 40px;
@@ -41,6 +45,7 @@ export const BoxCard = styled.View`
   background: #f2f2f2;
   border-radius: 10px;
   margin: 20px 0 10px;
+  elevation: 1px;
 `;
 
 export const CardTitle = styled.Text`
@@ -57,16 +62,20 @@ export const CardBoxName = styled.View`
 `;
 
 export const CardName = styled.Text`
-  width: 100%;
+  font-family: 'Cairo_400Regular';
+  font-size: 14px;
 `;
 
 export const CardNameDesc = styled.Text`
-  width: 100%;
+  font-family: 'Cairo_300Light';
+  font-size: 14px;
+  margin-left: 5px;
 `;
 
 export const CardBoxPreco = styled.View`
   width: 90%;
   flex-direction: row;
+  align-items: center;
 `;
 
 export const CardBoxTags = styled.View`
@@ -76,23 +85,31 @@ export const CardBoxTags = styled.View`
 `;
 
 export const PrecoTitle  = styled.Text`
-  width: 100%;
+  font-family: 'Cairo_400Regular';
+  font-size: 14px;
 `;
 
 export const PrecoDesc  = styled.Text`
-  width: 100%;
+  font-family: 'Cairo_300Light';
+  font-size: 14px;
+  margin-left: 5px;
 `;
 
 export const CardBoxLocation  = styled.View`
   width: 90%;
+  flex-direction: row;
+  align-items: center;
 `;
 
 export const LocationTitle = styled.Text`
-  width: 100%;
+  font-family: 'Cairo_400Regular';
+  font-size: 14px;
 `;
 
 export const LocationDesc = styled.Text`
-  width: 100%;
+  font-family: 'Cairo_300Light';
+  font-size: 14px;
+  margin-left: 5px;
 `;
 
 export const BoxTags = styled.View`
@@ -105,6 +122,7 @@ export const BoxTags = styled.View`
 export const TagsTitle = styled.Text`
   color: #FFF;
   font-family: 'Cairo_400Regular';
+  font-size: 14px;
 `;
 
 export const ButtonWhats = styled.TouchableOpacity`
