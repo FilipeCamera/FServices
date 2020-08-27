@@ -7,15 +7,15 @@ import {
   ButtonRegister,
   RegisterText,
   Button,
-  ButtonText
+  ButtonText,
 } from './styles';
 
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import backService from '../../assets/backService.jpg';
 import descLogo from '../../assets/LogoDesc.png';
 
-export default function Home() {
+const Home: React.FC = () => {
   const navigation = useNavigation();
   return (
     <Container>
@@ -30,4 +30,6 @@ export default function Home() {
       </Background>
     </Container>
   );
-}
+};
+
+export default Home;

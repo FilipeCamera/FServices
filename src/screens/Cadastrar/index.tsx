@@ -19,10 +19,10 @@ import {
 
 import Tags from 'react-native-tags';
 
-import {addCadastro} from '../../database/api';
+import { addCadastro } from '../../database/api';
 
-export default function Cadastrar() {
-  const [categoria, setCategoria] = useState('Serviços Domésticos');
+const Cadastrar: React.FC = () => {
+  const [categoria, setCategoria] = useState('');
   const [uf, setUf] = useState('SP');
   const [tagsData, setTagsData] = useState([]);
   const [nome, setNome] = useState('');
@@ -47,6 +47,10 @@ export default function Cadastrar() {
         mode="dropdown"
         onValueChange={(itemValue, itemIndex) => setCategoria(itemValue)}
       >
+        <Categoria.Item
+          label="Selecione..."
+          value=""
+        />
         <Categoria.Item
           label="Serviços Domésticos"
           value="Serviços Domésticos"
@@ -175,4 +179,6 @@ export default function Cadastrar() {
       </Button>
     </Container>
   );
-}
+};
+
+export default Cadastrar;

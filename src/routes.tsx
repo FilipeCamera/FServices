@@ -10,7 +10,7 @@ import Servicos from './screens/Servicos';
 
 const Stack = createStackNavigator();
 
-export default function Routes() {
+const Routes: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -48,3 +48,5 @@ export default function Routes() {
     </NavigationContainer>
   );
 }
+
+export default Routes;

@@ -5,10 +5,9 @@ import { AdMobBanner } from 'expo-ads-admob';
 import {
   Container,
   Scroll,
+  BoxSearchFilter,
   SearchBar,
-  TagsView,
-  TextTags,
-  ButtonTag,
+  ButtonFilter,
   BoxCard,
   CardTitle,
   CardBoxName,
@@ -25,18 +24,22 @@ import {
   TagsTitle,
   ButtonWhats,
   TextWhats,
+  BoxTagsFilter,
+  TagsFilterButton,
 } from './styles';
 
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 import * as Firebase from 'firebase';
 
-import Tags from 'react-native-tags';
-
 import { getServicos } from '../../database/api';
+import ModalFilter from '../../components/ModalFilter';
 
-export default function Servicos() {
-  const [filter, setFilter] = useState([]);
+const Servicos: React.FC = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [categoria, setCategoria] = useState('');
+  const [uf, setUf] = useState('');
+  const [endereco, setEndereco] = useState('');
   const [textSearch, setTextSearch] = useState('');
   const [data, setData] = useState<Firebase.firestore.DocumentData[]>([]);
   const [dataFilter, setDataFilter] = useState<
@@ -56,6 +59,16 @@ export default function Servicos() {
   }
   return (
     <Container>
+      <ModalFilter
+        categoria={categoria}
+        setCategoria={setCategoria}
+        uf={uf}
+        setUf={setUf}
+        endereco={endereco}
+        setEndereco={setEndereco}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
       <Scroll
         contentContainerStyle={{
           flexGrow: 1,
@@ -65,43 +78,50 @@ export default function Servicos() {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <Tags
-          style={{ width: '90%', marginTop: 20, flexDirection: 'row' }}
-          initialText=""
-          textInputProps={{
-            placeholder: 'Filtrar por',
-          }}
-          initialTags={filter}
-          onChangeTags={(tags: any) => {
-            setFilter(tags);
-          }}
-          onTagPress={(index: any, tagLabel: any, event: any, deleted: any) =>
-            console.log(
-              index,
-              tagLabel,
-              event,
-              deleted ? 'deleted' : 'not deleted'
-            )
-          }
-          containerStyle={{ justifyContent: 'center' }}
-          inputStyle={{ backgroundColor: 'white' }}
-          renderTag={({ tag, index, onPress, deleteTagOnPress, readonly }) => (
-            <TagsView key={`${tag}-${index}`}>
-              <TextTags>{tag}</TextTags>
-              <ButtonTag onPress={onPress}>
-                <AntDesign name="closecircleo" size={16} color="#FFF" />
-              </ButtonTag>
-            </TagsView>
-          )}
-        />
-        <SearchBar
-          value={textSearch}
-          placeholder="Pesquisar..."
-          onChangeText={(e) => {
-            search(e);
-            setTextSearch(e);
-          }}
-        />
+        <BoxSearchFilter>
+          <SearchBar
+            value={textSearch}
+            placeholder="Pesquisar..."
+            onChangeText={(e) => {
+              search(e);
+              setTextSearch(e);
+            }}
+            clearTextOnFocus={true}
+            onFocus={() => {
+              setTextSearch('');
+              search('');
+            }}
+          />
+          <ButtonFilter onPress={() => setModalVisible(true)}>
+            <AntDesign name="filter" size={20} color="#666666" />
+          </ButtonFilter>
+        </BoxSearchFilter>
+        <BoxTagsFilter>
+          <BoxTags>
+            <TagsTitle>{categoria}</TagsTitle>
+            {categoria !== '' ? (
+              <TagsFilterButton onPress={() => setCategoria('')}>
+                <AntDesign name="closecircleo" size={16} color='#FFF'/>
+              </TagsFilterButton>
+            ) : null}
+          </BoxTags>
+          <BoxTags>
+            <TagsTitle>{endereco}</TagsTitle>
+            {endereco !== '' ? (
+              <TagsFilterButton onPress={() => setEndereco('')}>
+                <AntDesign name="closecircleo" size={16} color='#FFF'/>
+              </TagsFilterButton>
+            ) : null}
+          </BoxTags>
+          <BoxTags>
+            <TagsTitle>{uf}</TagsTitle>
+            {uf !== '' ? (
+              <TagsFilterButton onPress={() => setUf('')}>
+                <AntDesign name="closecircleo" size={16} color='#FFF'/>
+              </TagsFilterButton>
+            ) : null}
+          </BoxTags>
+        </BoxTagsFilter>
         {dataFilter.map((item, index) => {
           return (
             <BoxCard key={index}>
@@ -148,4 +168,6 @@ export default function Servicos() {
       />
     </Container>
   );
-}
+};
+
+export default Servicos;
