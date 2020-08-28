@@ -55,7 +55,7 @@ const Cadastrar: React.FC = () => {
           label="Serviços Domésticos"
           value="Serviços Domésticos"
         />
-        <Categoria.Item label="Design e Criação" value="Tecnologia e Design" />
+        <Categoria.Item label="Design e Criação" value="Design e Criação" />
         <Categoria.Item
           label="Engenharia e Arquitetura"
           value="Engenharia e Arquitetura"

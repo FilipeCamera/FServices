@@ -52,11 +52,66 @@ const Servicos: React.FC = () => {
     loadServico();
     console.log(data);
   }, []);
+
   function search(e: String) {
     setDataFilter(
       data.filter((p) => p.nomeServico.toLowerCase().includes(e.toLowerCase()))
     );
   }
+
+  async function filterData(categoria: String, uf: String, endereco: String) {
+    const newData = data.filter((obj) => {
+      if (
+        (categoria != '' && endereco != '') ||
+        (categoria != '' && uf != '')
+      ) {
+        return (
+          (obj.categoria.toLowerCase() == categoria.toLowerCase() &&
+            obj.cidade.toLowerCase() == endereco.toLowerCase()) ||
+          (obj.categoria.toLowerCase() == categoria.toLowerCase() &&
+            obj.uf.toLowerCase() == uf.toLowerCase())
+        );
+      }
+      return (
+        obj.categoria.toLowerCase() == categoria.toLowerCase() ||
+        obj.cidade.toLowerCase() == endereco.toLowerCase() ||
+        obj.uf.toLowerCase() == uf.toLowerCase()
+      );
+    });
+  
+    setDataFilter(newData);
+    console.log(newData);
+  }
+
+  async function closeCategoria(
+    categoria: String,
+    uf: String,
+    endereco: String
+  ) {
+    setCategoria('');
+    if(categoria == ''){
+      return filterData(categoria, uf, endereco);
+    }
+  }
+
+  async function closeEndereco(
+    categoria: String,
+    uf: String,
+    endereco: String
+  ) {
+    setEndereco('');
+    if(endereco == ''){
+      return filterData(categoria, uf, endereco);
+    }
+  }
+
+  async function closeUf(categoria: String, uf: String, endereco: String) {
+    setUf('');
+    if(uf == ''){
+      return filterData(categoria, uf, endereco);
+    }
+  }
+
   return (
     <Container>
       <ModalFilter
@@ -68,6 +123,7 @@ const Servicos: React.FC = () => {
         setEndereco={setEndereco}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        filterData={filterData}
       />
       <Scroll
         contentContainerStyle={{
@@ -100,24 +156,30 @@ const Servicos: React.FC = () => {
           <BoxTags>
             <TagsTitle>{categoria}</TagsTitle>
             {categoria !== '' ? (
-              <TagsFilterButton onPress={() => setCategoria('')}>
-                <AntDesign name="closecircleo" size={16} color='#FFF'/>
+              <TagsFilterButton
+                onPress={() => closeCategoria(categoria, endereco, uf)}
+              >
+                <AntDesign name="closecircleo" size={16} color="#FFF" />
               </TagsFilterButton>
             ) : null}
           </BoxTags>
           <BoxTags>
             <TagsTitle>{endereco}</TagsTitle>
             {endereco !== '' ? (
-              <TagsFilterButton onPress={() => setEndereco('')}>
-                <AntDesign name="closecircleo" size={16} color='#FFF'/>
+              <TagsFilterButton
+                onPress={() => closeEndereco(categoria, endereco, uf)}
+              >
+                <AntDesign name="closecircleo" size={16} color="#FFF" />
               </TagsFilterButton>
             ) : null}
           </BoxTags>
           <BoxTags>
             <TagsTitle>{uf}</TagsTitle>
             {uf !== '' ? (
-              <TagsFilterButton onPress={() => setUf('')}>
-                <AntDesign name="closecircleo" size={16} color='#FFF'/>
+              <TagsFilterButton
+                onPress={() => closeUf(categoria, endereco, uf)}
+              >
+                <AntDesign name="closecircleo" size={16} color="#FFF" />
               </TagsFilterButton>
             ) : null}
           </BoxTags>

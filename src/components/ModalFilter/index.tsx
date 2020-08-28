@@ -21,6 +21,7 @@ interface modalFilterProps {
   setCategoria: any;
   setEndereco: any;
   setUf: any;
+  filterData: Function;
 }
 
 const ModalFilter: React.FC<modalFilterProps> = ({
@@ -32,6 +33,7 @@ const ModalFilter: React.FC<modalFilterProps> = ({
   setCategoria,
   setEndereco,
   setUf,
+  filterData,
 }) => {
   return (
     <Modal visible={modalVisible} animationType="slide">
@@ -42,18 +44,12 @@ const ModalFilter: React.FC<modalFilterProps> = ({
           mode="dropdown"
           onValueChange={(itemValue, itemIndex) => setCategoria(itemValue)}
         >
-          <Categoria.Item
-            label="Selecione..."
-            value=""
-          />
+          <Categoria.Item label="Selecione..." value="" />
           <Categoria.Item
             label="Serviços Domésticos"
             value="Serviços Domésticos"
           />
-          <Categoria.Item
-            label="Design e Criação"
-            value="Design e Criação"
-          />
+          <Categoria.Item label="Design e Criação" value="Design e Criação" />
           <Categoria.Item
             label="Engenharia e Arquitetura"
             value="Engenharia e Arquitetura"
@@ -115,8 +111,21 @@ const ModalFilter: React.FC<modalFilterProps> = ({
             <Uf.Item label="DF" value="DF" />
           </Uf>
         </BoxEndereco>
-        <Button onPress={() => setModalVisible(false)}>
+        <Button
+          onPress={() => {
+            setModalVisible(false);
+            filterData(categoria, uf, endereco);
+          }}
+        >
           <ButtonText>Ok</ButtonText>
+        </Button>
+        <Button
+          style={{backgroundColor: '#5A5A5A', marginTop: 5}}
+          onPress={() => {
+            setModalVisible(false);
+          }}
+        >
+          <ButtonText>Cancelar</ButtonText>
         </Button>
       </Container>
     </Modal>
