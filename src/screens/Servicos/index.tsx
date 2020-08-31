@@ -45,6 +45,7 @@ const Servicos: React.FC = () => {
   const [dataFilter, setDataFilter] = useState<
     Firebase.firestore.DocumentData[]
   >([]);
+
   useEffect(() => {
     async function loadServico() {
       await getServicos(setDataFilter, setData);
@@ -76,40 +77,30 @@ const Servicos: React.FC = () => {
         obj.categoria.toLowerCase() == categoria.toLowerCase() ||
         obj.cidade.toLowerCase() == endereco.toLowerCase() ||
         obj.uf.toLowerCase() == uf.toLowerCase()
-      );
+      );   
     });
-  
     setDataFilter(newData);
     console.log(newData);
   }
 
-  async function closeCategoria(
+  function closeCategoria(
     categoria: String,
     uf: String,
     endereco: String
   ) {
     setCategoria('');
-    if(categoria == ''){
-      return filterData(categoria, uf, endereco);
-    }
   }
 
-  async function closeEndereco(
+  function closeEndereco(
     categoria: String,
     uf: String,
     endereco: String
   ) {
     setEndereco('');
-    if(endereco == ''){
-      return filterData(categoria, uf, endereco);
-    }
   }
 
-  async function closeUf(categoria: String, uf: String, endereco: String) {
+  function closeUf(categoria: String, uf: String, endereco: String) {
     setUf('');
-    if(uf == ''){
-      return filterData(categoria, uf, endereco);
-    }
   }
 
   return (

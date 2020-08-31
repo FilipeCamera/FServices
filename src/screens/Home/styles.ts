@@ -14,24 +14,20 @@ export const LogoDesc = styled.Image`
   position: absolute;
   top: 50px;
   left: 25px;
-  height: 62%;
 `;
 
 export const ButtonRegister = styled.TouchableOpacity`
-  width: 80%;
-  height: 50px;
   align-items: center;
   justify-content: center;
   position: absolute;
-  bottom: 80px;
-  background: #E5E5E5;
-  border-radius: 10px;
+  bottom: 35px;
 `;
 
 export const RegisterText = styled.Text`
   font-family: 'Cairo_600SemiBold';
-  color: #404040;
+  color: #FFFFFF;
   font-size: 15px;
+  text-decoration: underline;
 `;
 
 export const Button = styled.TouchableOpacity`
@@ -40,14 +36,14 @@ export const Button = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   position: absolute;
-  bottom: 20px;
-  background: #416CD9;
-  border-radius: 10px;
+  bottom: 80px;
+  background: #E5E5E5;
+  border-radius: 5px;
 `;
 
 export const ButtonText = styled.Text`
   font-family: 'Cairo_600SemiBold';
-  color: #FFF;
+  color: #404040;
   font-size: 15px;
 `;
 

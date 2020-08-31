@@ -21,12 +21,12 @@ const Home: React.FC = () => {
     <Container>
       <Background source={backService}>
         <LogoDesc source={descLogo} />
-        <ButtonRegister onPress={() => navigation.navigate('Cadastrar')}>
-          <RegisterText>Cadastrar Serviço</RegisterText>
-        </ButtonRegister>
         <Button onPress={() => navigation.navigate('Servicos')}>
           <ButtonText>Procurar Serviços</ButtonText>
         </Button>
+        <ButtonRegister onPress={() => navigation.navigate('Cadastrar')}>
+          <RegisterText>Cadastrar Serviço</RegisterText>
+        </ButtonRegister>
       </Background>
     </Container>
   );
