@@ -1,10 +1,11 @@
+
 import { Alert } from 'react-native';
 
 import * as Firebase from 'firebase';
 
 import 'firebase/firestore';
+import PublishBanner from '../components/PublishModal/PublishBanner';
 
-import PublishBanner from '../components/PublishBanner';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCpGGAJy6Bj3J3WMj6XaQaKDwopQAe4Wks',
@@ -18,6 +19,7 @@ const firebaseConfig = {
 
 Firebase.initializeApp(firebaseConfig);
 
+
 const db = Firebase.firestore();
 
 export async function addCadastro(
@@ -29,7 +31,9 @@ export async function addCadastro(
   valorInicial: String,
   valorFinal: String,
   cidade: String,
-  uf: String
+  uf: String,
+  visible: Boolean,
+  setVisible: any
 ) {
   try {
     const docRef = await db.collection('servicos').add({

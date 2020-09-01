@@ -31,6 +31,7 @@ const Cadastrar: React.FC = () => {
   const [valorInicial, setValorInitial] = useState('');
   const [valorFinal, setValorFinal] = useState('');
   const [cidade, setCidade] = useState('');
+  const [visible, setVisible] = useState(false);
 
   return (
     <Container
@@ -171,7 +172,9 @@ const Cadastrar: React.FC = () => {
             valorInicial,
             valorFinal,
             cidade,
-            uf
+            uf,
+            visible,
+            setVisible
           );
         }}
       >

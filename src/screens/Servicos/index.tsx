@@ -214,7 +214,7 @@ const Servicos: React.FC = () => {
       </Scroll>
       <AdMobBanner
         bannerSize="fullBanner"
-        adUnitID="ca-app-pub-3940256099942544/6300978111"
+        adUnitID="ca-app-pub-4288571417280592/4063638057"
         servePersonalizedAds
         onDidFailToReceiveAdWithError={(e) => console.log(e)}
         style={{ position: 'absolute', bottom: 0, elevation: 5 }}
