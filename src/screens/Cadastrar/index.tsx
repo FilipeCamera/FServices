@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Container,
@@ -21,6 +21,8 @@ import Tags from 'react-native-tags';
 
 import { addCadastro } from '../../database/api';
 
+import ModalCadastro from '../../components/ModalCadastro';
+
 const Cadastrar: React.FC = () => {
   const [categoria, setCategoria] = useState('');
   const [uf, setUf] = useState('SP');
@@ -32,6 +34,19 @@ const Cadastrar: React.FC = () => {
   const [valorFinal, setValorFinal] = useState('');
   const [cidade, setCidade] = useState('');
   const [visible, setVisible] = useState(false);
+  const [completeRegister, setCompleteRegister] = useState(false);
+
+  useEffect(() => {
+    setCategoria('');
+    setUf('');
+    setNome('');
+    setNomeServico('');
+    setWhatsapp('');
+    setTagsData([]);
+    setValorInitial('');
+    setValorFinal('');
+    setCidade('');
+  }, [completeRegister]);
 
   return (
     <Container
@@ -40,7 +55,14 @@ const Cadastrar: React.FC = () => {
         alignItems: 'center',
         paddingBottom: 50,
       }}
+      showsVerticalScrollIndicator={false}
     >
+      <ModalCadastro
+        visible={visible}
+        setVisible={setVisible}
+        completeRegister={completeRegister}
+        setCompleteRegister={setCompleteRegister}
+      />
       <Title>Cadastrar</Title>
       <Label>Categoria:</Label>
       <Categoria
@@ -48,10 +70,7 @@ const Cadastrar: React.FC = () => {
         mode="dropdown"
         onValueChange={(itemValue, itemIndex) => setCategoria(itemValue)}
       >
-        <Categoria.Item
-          label="Selecione..."
-          value=""
-        />
+        <Categoria.Item label="Selecione..." value="" />
         <Categoria.Item
           label="Serviços Domésticos"
           value="Serviços Domésticos"
@@ -75,12 +94,14 @@ const Cadastrar: React.FC = () => {
         />
         <Categoria.Item label="Outros" value="Outros" />
       </Categoria>
-      <Input placeholder="Nome" onChangeText={(e) => setNome(e)} />
+      <Input value={nome} placeholder="Nome" onChangeText={(e) => setNome(e)} />
       <Input
+        value={nomeServico}
         placeholder="Nome do serviço"
         onChangeText={(e) => setNomeServico(e)}
       />
       <Input
+        value={whatsapp}
         placeholder="Whatsapp"
         onChangeText={(e) => setWhatsapp(e)}
         keyboardType="numeric"
@@ -115,18 +136,20 @@ const Cadastrar: React.FC = () => {
       <Label>Valor do serviço:</Label>
       <BoxValor>
         <ValorInput
+          value={valorInicial}
           placeholder="De"
           keyboardType="numbers-and-punctuation"
           onChangeText={(e) => setValorInitial(e)}
         />
         <ValorInput
+          value={valorFinal}
           placeholder="Até"
           keyboardType="numbers-and-punctuation"
           onChangeText={(e) => setValorFinal(e)}
         />
       </BoxValor>
       <BoxCity>
-        <CityInput placeholder="Cidade" onChangeText={(e) => setCidade(e)} />
+        <CityInput value={cidade} placeholder="Cidade" onChangeText={(e) => setCidade(e)} />
         <Uf
           mode="dropdown"
           selectedValue={uf}
@@ -163,6 +186,7 @@ const Cadastrar: React.FC = () => {
       </BoxCity>
       <Button
         onPress={() => {
+          setVisible(true);
           addCadastro(
             categoria,
             nome,
@@ -173,8 +197,7 @@ const Cadastrar: React.FC = () => {
             valorFinal,
             cidade,
             uf,
-            visible,
-            setVisible
+            setCompleteRegister
           );
         }}
       >

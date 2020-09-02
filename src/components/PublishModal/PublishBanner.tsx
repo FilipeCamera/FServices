@@ -1,8 +1,4 @@
-import React from 'react';
-
 import { AdMobInterstitial } from 'expo-ads-admob';
-
-import { Alert } from 'react-native';
 
 export default function PublishBanner() {
   async function publishBanner() {
@@ -12,7 +8,6 @@ export default function PublishBanner() {
     await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
     await AdMobInterstitial.showAdAsync();
 
-    return Alert.alert('Cadastro Feito!!');
   }
   return publishBanner();
 }

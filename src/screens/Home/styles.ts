@@ -12,7 +12,7 @@ export const Background = styled.ImageBackground`
 
 export const LogoDesc = styled.Image`
   position: absolute;
-  top: 50px;
+  top: 30px;
   left: 25px;
 `;
 

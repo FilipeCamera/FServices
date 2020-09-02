@@ -28,7 +28,7 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style="auto" translucent />
+      <StatusBar style="light" translucent={false} backgroundColor='#416CD9'/>
       <Routes />
     </>
   );

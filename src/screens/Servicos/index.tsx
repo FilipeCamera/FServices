@@ -26,6 +26,7 @@ import {
   TextWhats,
   BoxTagsFilter,
   TagsFilterButton,
+  ShowIndicator
 } from './styles';
 
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
@@ -175,7 +176,7 @@ const Servicos: React.FC = () => {
             ) : null}
           </BoxTags>
         </BoxTagsFilter>
-        {dataFilter.map((item, index) => {
+        {dataFilter.length ? dataFilter.map((item, index) => {
           return (
             <BoxCard key={index}>
               <CardTitle>{item.nomeServico}</CardTitle>
@@ -210,7 +211,7 @@ const Servicos: React.FC = () => {
               </ButtonWhats>
             </BoxCard>
           );
-        })}
+        }) : <ShowIndicator size='large' color='#416CD9'/>}
       </Scroll>
       <AdMobBanner
         bannerSize="fullBanner"

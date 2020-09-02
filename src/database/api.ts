@@ -32,8 +32,7 @@ export async function addCadastro(
   valorFinal: String,
   cidade: String,
   uf: String,
-  visible: Boolean,
-  setVisible: any
+  setCompleteRegister: any,
 ) {
   try {
     const docRef = await db.collection('servicos').add({
@@ -53,7 +52,7 @@ export async function addCadastro(
         'Tivemos um problema no servidor e o cadastro não foi feito'
       );
     }
-    return PublishBanner();
+    return setCompleteRegister(true);
   } catch (error) {
     return Alert.alert('Ocorreu um error');
   }

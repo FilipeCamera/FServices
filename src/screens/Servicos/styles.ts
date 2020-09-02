@@ -150,3 +150,7 @@ export const BoxTagsFilter = styled.View`
 export const TagsFilterButton = styled.TouchableOpacity`
   margin-left: 5px;
 `;
+
+export const ShowIndicator = styled.ActivityIndicator`
+  margin: 60px 0 0;
+`;
