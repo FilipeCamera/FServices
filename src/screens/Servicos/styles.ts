@@ -110,6 +110,7 @@ export const BoxTags = styled.View`
   border-radius: 5px;
   padding: 5px;
   margin-right: 5px;
+  margin-bottom: 5px;
   flex-direction: row;
   align-items: center;
 `;
@@ -129,7 +130,7 @@ export const ButtonWhats = styled.TouchableOpacity`
   width: 90%;
   border-radius: 10px;
   background: #4A992E;
-  margin: 10px 0;
+  margin: 5px 0 10px;
 `;
 
 

@@ -24,6 +24,8 @@
     },
     "android": {
       "config": {
+        "package": "com.flcamera.fservices",
+        "versionCode": 1,
         "googleMobileAdsAppId": "ca-app-pub-4288571417280592~2019928645"
       }
     }

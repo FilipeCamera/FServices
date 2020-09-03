@@ -23,6 +23,8 @@ import { addCadastro } from '../../database/api';
 
 import ModalCadastro from '../../components/ModalCadastro';
 
+import { Alert, Linking } from 'react-native';
+
 const Cadastrar: React.FC = () => {
   const [categoria, setCategoria] = useState('');
   const [uf, setUf] = useState('SP');
@@ -102,7 +104,7 @@ const Cadastrar: React.FC = () => {
       />
       <Input
         value={whatsapp}
-        placeholder="Whatsapp"
+        placeholder="Whatsapp - DD988888888"
         onChangeText={(e) => setWhatsapp(e)}
         keyboardType="numeric"
       />
@@ -138,18 +140,22 @@ const Cadastrar: React.FC = () => {
         <ValorInput
           value={valorInicial}
           placeholder="De"
-          keyboardType="numbers-and-punctuation"
+          keyboardType="numeric"
           onChangeText={(e) => setValorInitial(e)}
         />
         <ValorInput
           value={valorFinal}
           placeholder="Até"
-          keyboardType="numbers-and-punctuation"
+          keyboardType="numeric"
           onChangeText={(e) => setValorFinal(e)}
         />
       </BoxValor>
       <BoxCity>
-        <CityInput value={cidade} placeholder="Cidade" onChangeText={(e) => setCidade(e)} />
+        <CityInput
+          value={cidade}
+          placeholder="Cidade"
+          onChangeText={(e) => setCidade(e)}
+        />
         <Uf
           mode="dropdown"
           selectedValue={uf}
@@ -186,6 +192,20 @@ const Cadastrar: React.FC = () => {
       </BoxCity>
       <Button
         onPress={() => {
+          if (
+            categoria == '' ||
+            nome == '' ||
+            nomeServico == '' ||
+            whatsapp == '' ||
+            tagsData == [] ||
+            valorInicial == '' ||
+            valorFinal == '' ||
+            cidade == '' ||
+            uf == ''
+          ){
+            Alert.alert('Preencha todos os campos!!')
+          }
+          else {
           setVisible(true);
           addCadastro(
             categoria,
@@ -199,6 +219,7 @@ const Cadastrar: React.FC = () => {
             uf,
             setCompleteRegister
           );
+          }
         }}
       >
         <ButtonText>Finalizar</ButtonText>

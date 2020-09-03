@@ -26,7 +26,7 @@ import {
   TextWhats,
   BoxTagsFilter,
   TagsFilterButton,
-  ShowIndicator
+  ShowIndicator,
 } from './styles';
 
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
@@ -35,6 +35,7 @@ import * as Firebase from 'firebase';
 
 import { getServicos } from '../../database/api';
 import ModalFilter from '../../components/ModalFilter';
+import { Linking } from 'react-native';
 
 const Servicos: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -52,7 +53,6 @@ const Servicos: React.FC = () => {
       await getServicos(setDataFilter, setData);
     }
     loadServico();
-    console.log(data);
   }, []);
 
   function search(e: String) {
@@ -61,7 +61,26 @@ const Servicos: React.FC = () => {
     );
   }
 
-  async function filterData(categoria: String, uf: String, endereco: String) {
+  function searchFilter() {
+    setDataFilter(
+      data.filter((p) => {
+        if(categoria == '' && endereco == '' && uf == ''){
+          return p.categoria.includes('');
+        }
+        if (p.categoria.toLowerCase() == categoria.toLowerCase()) {
+          return p.categoria.toLowerCase();
+        }
+        if (p.cidade.toLowerCase() == endereco.toLowerCase()) {
+          return p.cidade.toLowerCase();
+        }
+        if (p.uf.toLowerCase() == uf.toLowerCase()) {
+          return p.uf.toLowerCase();
+        }
+      })
+    );
+  }
+
+  function filterData(categoria: String, uf: String, endereco: String) {
     const newData = data.filter((obj) => {
       if (
         (categoria != '' && endereco != '') ||
@@ -78,30 +97,31 @@ const Servicos: React.FC = () => {
         obj.categoria.toLowerCase() == categoria.toLowerCase() ||
         obj.cidade.toLowerCase() == endereco.toLowerCase() ||
         obj.uf.toLowerCase() == uf.toLowerCase()
-      );   
+      );
     });
     setDataFilter(newData);
     console.log(newData);
   }
 
-  function closeCategoria(
-    categoria: String,
-    uf: String,
-    endereco: String
-  ) {
+  async function closeCategoria() {
     setCategoria('');
+    if(categoria == ''){
+      return searchFilter();
+    }
   }
 
-  function closeEndereco(
-    categoria: String,
-    uf: String,
-    endereco: String
-  ) {
+  function closeEndereco() {
     setEndereco('');
+    if(endereco == ''){
+      return searchFilter();
+    }
   }
 
-  function closeUf(categoria: String, uf: String, endereco: String) {
+  function closeUf() {
     setUf('');
+    if(uf == ''){
+      return searchFilter();
+    }
   }
 
   return (
@@ -149,7 +169,9 @@ const Servicos: React.FC = () => {
             <TagsTitle>{categoria}</TagsTitle>
             {categoria !== '' ? (
               <TagsFilterButton
-                onPress={() => closeCategoria(categoria, endereco, uf)}
+                onPress={() => {
+                  closeCategoria();
+                }}
               >
                 <AntDesign name="closecircleo" size={16} color="#FFF" />
               </TagsFilterButton>
@@ -159,7 +181,9 @@ const Servicos: React.FC = () => {
             <TagsTitle>{endereco}</TagsTitle>
             {endereco !== '' ? (
               <TagsFilterButton
-                onPress={() => closeEndereco(categoria, endereco, uf)}
+                onPress={() => {
+                  closeEndereco();
+                }}
               >
                 <AntDesign name="closecircleo" size={16} color="#FFF" />
               </TagsFilterButton>
@@ -169,49 +193,59 @@ const Servicos: React.FC = () => {
             <TagsTitle>{uf}</TagsTitle>
             {uf !== '' ? (
               <TagsFilterButton
-                onPress={() => closeUf(categoria, endereco, uf)}
+                onPress={() => {
+                  closeUf();
+                }}
               >
                 <AntDesign name="closecircleo" size={16} color="#FFF" />
               </TagsFilterButton>
             ) : null}
           </BoxTags>
         </BoxTagsFilter>
-        {dataFilter.length ? dataFilter.map((item, index) => {
-          return (
-            <BoxCard key={index}>
-              <CardTitle>{item.nomeServico}</CardTitle>
-              <CardBoxName>
-                <CardName>Nome:</CardName>
-                <CardNameDesc>{item.nome}</CardNameDesc>
-              </CardBoxName>
-              <CardBoxPreco>
-                <PrecoTitle>Valor do serviço:</PrecoTitle>
-                <PrecoDesc>
-                  R${item.valorInicial} - R${item.valorFinal}
-                </PrecoDesc>
-              </CardBoxPreco>
-              <CardBoxLocation>
-                <LocationTitle>Localização:</LocationTitle>
-                <LocationDesc>
-                  {item.cidade}, {item.uf}
-                </LocationDesc>
-              </CardBoxLocation>
-              <CardBoxTags>
-                {item.tagsData.map((item: any, index: any) => {
-                  return (
-                    <BoxTags key={index}>
-                      <TagsTitle>{item}</TagsTitle>
-                    </BoxTags>
-                  );
-                })}
-              </CardBoxTags>
-              <ButtonWhats>
-                <FontAwesome name="whatsapp" size={25} color="#FFF" />
-                <TextWhats>Chamar no Whatsapp</TextWhats>
-              </ButtonWhats>
-            </BoxCard>
-          );
-        }) : <ShowIndicator size='large' color='#416CD9'/>}
+        {dataFilter.length ? (
+          dataFilter.map((item, index) => {
+            return (
+              <BoxCard key={index}>
+                <CardTitle>{item.nomeServico}</CardTitle>
+                <CardBoxName>
+                  <CardName>Nome:</CardName>
+                  <CardNameDesc>{item.nome}</CardNameDesc>
+                </CardBoxName>
+                <CardBoxPreco>
+                  <PrecoTitle>Valor do serviço:</PrecoTitle>
+                  <PrecoDesc>
+                    R${item.valorInicial} - R${item.valorFinal}
+                  </PrecoDesc>
+                </CardBoxPreco>
+                <CardBoxLocation>
+                  <LocationTitle>Localização:</LocationTitle>
+                  <LocationDesc>
+                    {item.cidade}, {item.uf}
+                  </LocationDesc>
+                </CardBoxLocation>
+                <CardBoxTags>
+                  {item.tagsData.map((item: any, index: any) => {
+                    return (
+                      <BoxTags key={index}>
+                        <TagsTitle>{item}</TagsTitle>
+                      </BoxTags>
+                    );
+                  })}
+                </CardBoxTags>
+                <ButtonWhats
+                  onPress={() => {
+                    Linking.openURL(`whatsapp://send?phone=55${item.whatsapp}`);
+                  }}
+                >
+                  <FontAwesome name="whatsapp" size={25} color="#FFF" />
+                  <TextWhats>Chamar no Whatsapp</TextWhats>
+                </ButtonWhats>
+              </BoxCard>
+            );
+          })
+        ) : (
+          <ShowIndicator size="large" color="#416CD9" />
+        )}
       </Scroll>
       <AdMobBanner
         bannerSize="fullBanner"
